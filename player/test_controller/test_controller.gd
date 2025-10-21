@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+@export_group("Input")
+@export var input_left := "move_left"
+@export var input_right := "move_right"
+@export var input_jump := "move_jump"
+
 @export_group("Player Movement")
 @export var base_speed := 300.0
 @export var jump_height := 10.0
