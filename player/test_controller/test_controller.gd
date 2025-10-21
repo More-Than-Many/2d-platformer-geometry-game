@@ -6,26 +6,40 @@ extends CharacterBody2D
 @export var input_jump := "move_jump"
 
 @export_group("Player Movement")
-@export var base_speed := 300.0
-@export var jump_height := 10.0
-@export var gravity_amount := 10.0
+@export var base_speed := 8000.0
+@export var jump_height := -350.0
+@export var gravity_amount := 600.0
+
+@export_group("Player Abilities")
+@export var frozen := false
+@export var can_move := true
+@export var can_jump := true
+
+var direction : float
 
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	if frozen:
+		return
+	
 	if not is_on_floor():
-		velocity += gravity_amount * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y += gravity_amount * delta
+	
+	if not can_jump:
+		return
+	
+	if Input.is_action_just_pressed(input_jump) and is_on_floor():
 		velocity.y = jump_height
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
+	if not can_move:
+		return
+	
+	direction = Input.get_axis(input_left, input_right)
+	
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * base_speed * delta
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = 0
+		
 
 	move_and_slide()

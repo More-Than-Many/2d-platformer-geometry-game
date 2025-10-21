@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp2en5io5paue"]
+[gd_scene load_steps=6 format=3 uid="uid://bp2en5io5paue"]
 
 [ext_resource type="Script" uid="uid://bkpurjmfbd4k3" path="res://player/test_controller/test_controller.gd" id="1_ef0cv"]
 [ext_resource type="Texture2D" uid="uid://b0pgmaw5hyju0" path="res://player/test_controller/squarepng.png" id="1_jbweq"]
@@ -16,6 +16,8 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtt88"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef0cv"]
+
 [node name="TestController" type="CharacterBody2D"]
 script = ExtResource("1_ef0cv")
 
@@ -27,3 +29,9 @@ sprite_frames = SubResource("SpriteFrames_ef0cv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(3.2, 3.2)
 shape = SubResource("RectangleShape2D_gtt88")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.2, 3.2)
+shape = SubResource("RectangleShape2D_ef0cv")
