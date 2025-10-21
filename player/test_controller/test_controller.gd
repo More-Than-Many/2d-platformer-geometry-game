@@ -37,19 +37,15 @@ func _physics_process(delta: float) -> void:
 		return
 
 	direction = Input.get_axis(input_left, input_right)
-	print(direction)
 	
 	if direction != 0.0:
 		velocity.x = direction * base_speed * delta
 		self.rotate(direction * rotation_speed * delta)
 		recent_direction = direction
-		print("DIRECTION")
 	else:
 		velocity.x = lerp(0.0, velocity.x, 0.95)
-		print("ROTATE")
 		if abs(int(self.rotation_degrees) % 90) > 0.1:
 			self.rotate(recent_direction * rotation_speed * delta * 0.5)
-			print("ROTATING")
 		
 
 	move_and_slide()
