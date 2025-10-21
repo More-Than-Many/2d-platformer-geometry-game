@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = lerp(0.0, velocity.x, 0.95)
 		print("ROTATE")
-		if int(self.rotation_degrees) % 180 > 2:
+		if abs(int(self.rotation_degrees) % 90) > 0.1:
 			self.rotate(recent_direction * rotation_speed * delta * 0.5)
 			print("ROTATING")
 		
