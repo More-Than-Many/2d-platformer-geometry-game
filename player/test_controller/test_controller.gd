@@ -9,6 +9,7 @@ extends CharacterBody2D
 @export var base_speed := 8000.0
 @export var jump_height := -350.0
 @export var gravity_amount := 600.0
+@export var rotation_speed := 3.0
 
 @export_group("Player Abilities")
 @export var frozen := false
@@ -16,6 +17,7 @@ extends CharacterBody2D
 @export var can_jump := true
 
 var direction : float
+var recent_direction : float
 
 
 func _physics_process(delta: float) -> void:
@@ -33,13 +35,21 @@ func _physics_process(delta: float) -> void:
 
 	if not can_move:
 		return
-	
+
 	direction = Input.get_axis(input_left, input_right)
+	print(direction)
 	
-	if direction:
+	if direction != 0.0:
 		velocity.x = direction * base_speed * delta
+		self.rotate(direction * rotation_speed * delta)
+		recent_direction = direction
+		print("DIRECTION")
 	else:
-		velocity.x = 0
+		velocity.x = lerp(0.0, velocity.x, 0.95)
+		print("ROTATE")
+		if int(self.rotation_degrees) % 180 > 2:
+			self.rotate(recent_direction * rotation_speed * delta * 0.5)
+			print("ROTATING")
 		
 
 	move_and_slide()
