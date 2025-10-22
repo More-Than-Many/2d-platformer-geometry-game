@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c234uhvpdek3g"]
+
+[ext_resource type="FontFile" uid="uid://bxpsr725b05qb" path="res://ui/themes/fonts/Poppins-Regular.ttf" id="1_fq4u8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pb6rs"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pscce"]
+bg_color = Color(0.70980394, 0.7058824, 1, 0.39215687)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36xj7"]
+bg_color = Color(0.70980394, 0.7058824, 1, 0.39215687)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5ror"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4osj"]
+bg_color = Color(0.70980394, 0.7058824, 1, 0.39215687)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+default_font = ExtResource("1_fq4u8")
+Button/font_sizes/font_size = 128
+Button/styles/disabled = SubResource("StyleBoxFlat_pb6rs")
+Button/styles/focus = SubResource("StyleBoxFlat_pscce")
+Button/styles/hover = SubResource("StyleBoxFlat_36xj7")
+Button/styles/normal = SubResource("StyleBoxFlat_g5ror")
+Button/styles/pressed = SubResource("StyleBoxFlat_d4osj")
+VBoxContainer/constants/separation = 16
