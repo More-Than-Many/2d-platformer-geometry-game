@@ -1,10 +1,6 @@
 extends RigidBody2D
 
-@export var base_torque_force := 12000.0
-@export var jump_height := 1200.0
-
-@export_group("Nodes"
-@export var CornerHolder : Node
+@export_group("Nodes")
 @export var Center : Node2D
 
 @export_group("Input")
@@ -15,6 +11,7 @@ extends RigidBody2D
 @export_group("Player Movement")
 @export var base_torque := 12000.0
 @export var jump_height := 1200.0
+@export var jump_length := 600.0
 
 @export_group("Player Abilities")
 @export var frozen := false
@@ -22,12 +19,12 @@ extends RigidBody2D
 @export var can_jump := true
 
 var input_direction : float
-var current_torque_force : float
+var current_torque : float
 
 var corners = []
 
 func _ready():
-	for child in CornerHolder.get_children():
+	for child in Center.get_children():
 		if child is Node2D:
 			corners.append(child)
 
@@ -36,8 +33,8 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	input_direction = Input.get_axis("left", "right")
-	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5)
-	apply_torque(current_torque_force)
+	current_torque = lerp(current_torque, input_direction * base_torque, 0.5)
+	apply_torque(current_torque)
 
 	if not can_jump:
 		return
@@ -49,17 +46,19 @@ func _physics_process(_delta: float) -> void:
 
 
 func jump() -> void:
-	var highest_corner_position = Center.global_position
+	var highest_corner_position = Vector2(Center.global_position.x, Center.global_position.y - 32)
+	
 
 	for corner in corners:
-		if corner.global_position.y == (highest_corner_position.y - 32.0):
+		if abs(corner.global_position.y - (Center.global_position.y - 32)) < 1.0:
 			pass
 		elif corner.global_position.y < highest_corner_position.y:
 			highest_corner_position = corner.global_position
 	
-	var direction_to_corner = (point - self.global_position).normalized()
-	linear_velocity.x += direction_to_point.x
-	linear_velocity.y += direction_to_corner.y * jump_height
+	var direction_to_corner = (highest_corner_position - Center.global_position).normalized()
+
+	linear_velocity.x = direction_to_corner.x * jump_length
+	linear_velocity.y = direction_to_corner.y * jump_height
 
 	
 	
