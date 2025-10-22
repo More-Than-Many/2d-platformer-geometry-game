@@ -11,7 +11,7 @@ func _ready():
 
 func _physics_process(_delta: float) -> void:
 	input_direction = Input.get_axis("left", "right")
-	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5)
+	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5) #Upon further inspection this may be a bad way of doing this, will try a different method of lerping
 	
 	apply_torque(current_torque_force)
 		
