@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 @export var base_torque_force := 12000.0
-@export var jump_height := 600.0
+@export var jump_height := 1.5
 
 @export var CornerHolder : Node
 
@@ -33,11 +33,10 @@ func jump() -> void:
 		if corner.global_position.y < highest_corner.global_position.y:
 			highest_corner = corner
 	
-	jump_towards(highest_corner.global_position)
-	print(highest_corner.position)
+	jump_towards(highest_corner.global_position.y)
 
 func jump_towards(point):
-	var direction_to_point = (point - self.global_position).normalized()
-	linear_velocity = direction_to_point * jump_height
+	var direction_to_point = (point - self.global_position.y)
+	linear_velocity.y += direction_to_point * jump_height
 	
 	
