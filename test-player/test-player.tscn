@@ -36,3 +36,5 @@ position = Vector2(-32, -32)
 
 [node name="TopRight" type="Node2D" parent="CornerHolder"]
 position = Vector2(32, -32)
+
+[node name="Center" type="Node2D" parent="CornerHolder"]
