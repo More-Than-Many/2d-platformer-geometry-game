@@ -7,9 +7,10 @@ size = Vector2(64, 64)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tmtbt"]
 
-[node name="TestPlayer" type="RigidBody2D"]
+[node name="TestPlayer" type="RigidBody2D" node_paths=PackedStringArray("CornerHolder")]
 mass = 0.25
 script = ExtResource("1_d7e6n")
+CornerHolder = NodePath("CornerHolder")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_d7e6n")
@@ -21,3 +22,17 @@ scale = Vector2(64, 64)
 texture = SubResource("CanvasTexture_tmtbt")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CornerHolder" type="Node" parent="."]
+
+[node name="BottomLeft" type="Node2D" parent="CornerHolder"]
+position = Vector2(-32, 32)
+
+[node name="BottomRight" type="Node2D" parent="CornerHolder"]
+position = Vector2(32, 32)
+
+[node name="TopLeft" type="Node2D" parent="CornerHolder"]
+position = Vector2(-32, -32)
+
+[node name="TopRight" type="Node2D" parent="CornerHolder"]
+position = Vector2(32, -32)
