@@ -5,6 +5,7 @@ extends RigidBody2D
 
 @export_group("Nodes"
 @export var CornerHolder : Node
+@export var Center : Node2D
 
 @export_group("Input")
 @export var input_left := "move_left"
@@ -20,14 +21,10 @@ extends RigidBody2D
 @export var can_move := true
 @export var can_jump := true
 
-var direction : float
-var recent_direction : float
+var input_direction : float
+var current_torque_force : float
 
 var corners = []
-
-var input_direction : float
-
-var current_torque_force : float
 
 func _ready():
 	for child in CornerHolder.get_children():
@@ -39,8 +36,7 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	input_direction = Input.get_axis("left", "right")
-	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5) #Upon further inspection this may be a bad way of doing this, will try a different method of lerping
-	
+	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5)
 	apply_torque(current_torque_force)
 
 	if not can_jump:
@@ -53,22 +49,17 @@ func _physics_process(_delta: float) -> void:
 
 
 func jump() -> void:
-	var highest_corner_position = $CornerHolder/Center.global_position
-	print(highest_corner_position)
+	var highest_corner_position = Center.global_position
+
 	for corner in corners:
 		if corner.global_position.y == (highest_corner_position.y - 32.0):
-			highest_corner_position = $CornerHolder/Center.global_position
-			highest_corner_position.y -= 32.0
+			pass
 		elif corner.global_position.y < highest_corner_position.y:
 			highest_corner_position = corner.global_position
 	
-	jump_towards(highest_corner_position)
-	print(highest_corner_position)
-
-func jump_towards(point):
-	var direction_to_point = (point - self.global_position).normalized()
-	linear_velocity.y += direction_to_point.y * jump_height
-	print(direction_to_point)
+	var direction_to_corner = (point - self.global_position).normalized()
 	linear_velocity.x += direction_to_point.x
+	linear_velocity.y += direction_to_corner.y * jump_height
+
 	
 	
