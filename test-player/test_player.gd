@@ -1,18 +1,64 @@
 extends RigidBody2D
 
-@export var base_torque_force := 12000.0
+@export_group("Nodes")
+@export var Center : Node2D
+
+@export_group("Input")
+@export var input_left := "move_left"
+@export var input_right := "move_right"
+@export var input_jump := "move_jump"
+
+@export_group("Player Movement")
+@export var base_torque := 12000.0
+@export var jump_height := 1200.0
+@export var jump_length := 600.0
+
+@export_group("Player Abilities")
+@export var frozen := false
+@export var can_move := true
+@export var can_jump := true
 
 var input_direction : float
+var current_torque : float
 
-var current_torque_force : float
+var corners = []
 
 func _ready():
-	pass
+	for child in Center.get_children():
+		if child is Node2D:
+			corners.append(child)
 
 func _physics_process(_delta: float) -> void:
+	if not can_move:
+		return
+
 	input_direction = Input.get_axis("left", "right")
-	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.5) #Upon further inspection this may be a bad way of doing this, will try a different method of lerping
+	current_torque = lerp(current_torque, input_direction * base_torque, 0.5)
+	apply_torque(current_torque)
+
+	if not can_jump:
+		return
 	
-	apply_torque(current_torque_force)
+	if Input.is_action_just_pressed("jump"):
+		jump()
 		
 	angular_velocity = clamp(angular_velocity, -PI, PI)
+
+
+func jump() -> void:
+	var highest_corner_position = Vector2(Center.global_position.x, Center.global_position.y - 32)
+	
+
+	for corner in corners:
+		if abs(corner.global_position.y - (Center.global_position.y - 32)) < 1.0:
+			pass
+		elif corner.global_position.y < highest_corner_position.y:
+			highest_corner_position = corner.global_position
+	
+	var direction_to_corner = (highest_corner_position - Center.global_position).normalized()
+
+	linear_velocity.x = direction_to_corner.x * jump_length
+	linear_velocity.y = direction_to_corner.y * jump_height
+
+	
+	
