@@ -1,15 +1,19 @@
 extends RigidBody2D
 
-@export var torque_force = 8000
+@export var base_torque_force := 16000.0
+
+var input_direction : float
+
+var current_torque_force : float
 
 func _ready():
-	print(torque_force)
+	pass
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_pressed("left"):
-		apply_torque(-torque_force)
+	input_direction = Input.get_axis("left", "right")
+	current_torque_force = lerp(current_torque_force, input_direction * base_torque_force, 0.3)
 	
-	if Input.is_action_pressed("right"):
-		apply_torque(torque_force)
+	apply_torque(current_torque_force)
+	print(current_torque_force)
 		
 	angular_velocity = clamp(angular_velocity, -PI, PI)

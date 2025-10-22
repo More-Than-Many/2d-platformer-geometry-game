@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmntcl6lidau3" path="res://test-player/test_player.gd" id="1_d7e6n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmtbt"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d7e6n"]
 size = Vector2(64, 64)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_tmtbt"]
@@ -12,10 +12,12 @@ mass = 0.25
 script = ExtResource("1_d7e6n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_tmtbt")
+shape = SubResource("RectangleShape2D_d7e6n")
 debug_color = Color(0, 0.6, 0.69803923, 0.76862746)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -9.536743e-07)
 scale = Vector2(64, 64)
 texture = SubResource("CanvasTexture_tmtbt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
