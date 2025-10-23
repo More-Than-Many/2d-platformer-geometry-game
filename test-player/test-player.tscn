@@ -9,6 +9,7 @@ size = Vector2(64, 64)
 
 [node name="TestPlayer" type="RigidBody2D" node_paths=PackedStringArray("Center")]
 mass = 0.25
+custom_integrator = true
 script = ExtResource("1_d7e6n")
 Center = NodePath("Center")
 
