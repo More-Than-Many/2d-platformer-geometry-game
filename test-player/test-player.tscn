@@ -28,11 +28,51 @@ texture = SubResource("CanvasTexture_tmtbt")
 [node name="BottomLeft" type="Node2D" parent="Center"]
 position = Vector2(-32, 32)
 
+[node name="RayCast2D" type="RayCast2D" parent="Center/BottomLeft"]
+position = Vector2(2, -1)
+exclude_parent = false
+target_position = Vector2(0, 10)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Center/BottomLeft"]
+position = Vector2(1, -2)
+exclude_parent = false
+target_position = Vector2(-10, 0)
+
 [node name="BottomRight" type="Node2D" parent="Center"]
 position = Vector2(32, 32)
+
+[node name="RayCast2D" type="RayCast2D" parent="Center/BottomRight"]
+position = Vector2(-2, -1)
+exclude_parent = false
+target_position = Vector2(0, 10)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Center/BottomRight"]
+position = Vector2(-1, -2)
+exclude_parent = false
+target_position = Vector2(10, 0)
 
 [node name="TopLeft" type="Node2D" parent="Center"]
 position = Vector2(-32, -32)
 
+[node name="RayCast2D" type="RayCast2D" parent="Center/TopLeft"]
+position = Vector2(1, 2)
+exclude_parent = false
+target_position = Vector2(-10, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Center/TopLeft"]
+position = Vector2(2, 1)
+exclude_parent = false
+target_position = Vector2(0, -10)
+
 [node name="TopRight" type="Node2D" parent="Center"]
 position = Vector2(32, -32)
+
+[node name="RayCast2D" type="RayCast2D" parent="Center/TopRight"]
+position = Vector2(-1, 2)
+exclude_parent = false
+target_position = Vector2(10, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Center/TopRight"]
+position = Vector2(-2, 1)
+exclude_parent = false
+target_position = Vector2(0, -10)
