@@ -26,7 +26,7 @@ extends RigidBody2D
 
 @export_group("Physics")
 var angular_damping := 5.0
-var angular_velo_clamping = PI * 1.8
+var angular_velo_clamping = PI * 1.5
 
 var input_direction : float
 var current_torque : float
