@@ -22,6 +22,7 @@ extends RigidBody2D
 @export_group("Gravity")
 @export var gravity_strength := 980.0
 @export var gravity_direction := Vector2.DOWN
+@export var possible_gravity_directions := [Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT, Vector2.UP]
 
 @export_group("Physics")
 var angular_damping := 5.0
@@ -35,10 +36,10 @@ var raycasts := []
 
 func _ready():
 	for child in Center.get_children():
-		if child is Node2D:
-			corners.append(child)
-		elif child is RayCast2D:
+		if child is RayCast2D:
 			raycasts.append(child)
+		elif child is Node2D:
+			corners.append(child)
 
 func _physics_process(_delta: float) -> void:
 	if not can_move:
@@ -47,11 +48,7 @@ func _physics_process(_delta: float) -> void:
 	input_direction = Input.get_axis(input_left, input_right)
 	current_torque = lerp(current_torque, input_direction * base_torque, input_direction_pull)
 	
-	if Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")) != Vector2.ZERO:
-		gravity_change(Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")))
-	
-	if not can_jump:
-		return
+	stick()
 	
 	if Input.is_action_just_pressed(input_jump):
 		jump()
@@ -61,11 +58,15 @@ func _integrate_forces(state):
 	state.angular_velocity -= state.angular_velocity * angular_damping * state.step
 	
 	state.angular_velocity += current_torque * state.inverse_inertia * state.step
-	
 	state.angular_velocity = clamp(state.angular_velocity, -angular_velo_clamping, angular_velo_clamping)
 
 
 func jump() -> void:
+	if not can_jump:
+		return
+	
+	gravity_change(Vector2.DOWN)
+	
 	var highest_corner_position = Vector2(Center.global_position.x, Center.global_position.y - 32)
 	
 	for corner in corners:
@@ -79,8 +80,27 @@ func jump() -> void:
 	linear_velocity.x = direction_to_corner.x * jump_length
 	linear_velocity.y = direction_to_corner.y * jump_height
 
-func gravity_change(direction : Vector2) -> void:
-	gravity_direction = direction.normalized()
+func stick() -> void:
+	if not can_jump:
+		return
+	
+	for raycast in raycasts:
+		if not raycast.is_colliding():
+			return
+		
+		gravity_change(raycast.get_collision_point() - self.global_position)
+		
+		
+func gravity_change(stick_direction : Vector2) -> void:
+	stick_direction = stick_direction.normalized()
+	
+	var closest_gravity_direction := Vector2.DOWN
+	
+	for possible_direction in possible_gravity_directions:
+		if abs(possible_direction - stick_direction).length() < closest_gravity_direction.length():
+			closest_gravity_direction = possible_direction
+		
+	gravity_direction = closest_gravity_direction.normalized()
 
 	
 	

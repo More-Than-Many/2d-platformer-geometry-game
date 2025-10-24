@@ -39,13 +39,13 @@ position = Vector2(-32, -32)
 position = Vector2(32, -32)
 
 [node name="LeftRaycast" type="RayCast2D" parent="Center"]
-target_position = Vector2(-44, 0)
+target_position = Vector2(-48, 0)
 
 [node name="RightRaycast" type="RayCast2D" parent="Center"]
-target_position = Vector2(44, 0)
+target_position = Vector2(48, 0)
 
 [node name="DownRaycast" type="RayCast2D" parent="Center"]
-target_position = Vector2(0, 44)
+target_position = Vector2(0, 48)
 
 [node name="UpRaycast" type="RayCast2D" parent="Center"]
-target_position = Vector2(0, -44)
+target_position = Vector2(0, 48)
