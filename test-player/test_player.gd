@@ -81,14 +81,9 @@ func jump() -> void:
 	linear_velocity.y = direction_to_corner.y * jump_height
 
 func stick() -> void:
-	if not can_jump:
-		return
-	
 	for raycast in raycasts:
-		if not raycast.is_colliding():
-			return
-		
-		gravity_change(raycast.get_collision_point() - self.global_position)
+		if raycast.is_colliding():
+			gravity_change(raycast.get_collision_point() - self.global_position)
 		
 		
 func gravity_change(stick_direction : Vector2) -> void:
