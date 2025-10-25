@@ -22,6 +22,7 @@ extends RigidBody2D
 @export_group("Gravity")
 @export var gravity_strength := 980.0
 @export var gravity_direction := Vector2.DOWN
+@export var gravity_angle := gravity_direction.angle() - deg_to_rad(90)
 @export var possible_gravity_directions := [Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT, Vector2.UP]
 
 @export_group("Physics")
@@ -65,8 +66,6 @@ func jump() -> void:
 	if not can_jump:
 		return
 	
-	var gravity_angle := gravity_direction.angle() - deg_to_rad(90)
-	
 	var highest_corner_position = Vector2(Center.global_position.x, Center.global_position.y - 32)
 	
 	for corner in corners:
@@ -87,7 +86,6 @@ func stick() -> void:
 	for raycast in raycasts:
 		if raycast.is_colliding():
 			gravity_change(raycast.get_collision_point() - self.global_position)
-			print(gravity_direction)
 		
 		
 func gravity_change(stick_direction : Vector2) -> void:
@@ -100,6 +98,7 @@ func gravity_change(stick_direction : Vector2) -> void:
 			closest_gravity_direction = possible_direction
 		
 	gravity_direction = closest_gravity_direction.normalized()
+	gravity_angle = gravity_direction.angle() - deg_to_rad(90)
 
 	
 	
