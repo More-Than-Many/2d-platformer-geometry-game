@@ -8,6 +8,7 @@ size = Vector2(64, 64)
 [sub_resource type="CanvasTexture" id="CanvasTexture_tmtbt"]
 
 [node name="TestPlayer" type="RigidBody2D" node_paths=PackedStringArray("Center")]
+collision_layer = 2
 mass = 0.25
 custom_integrator = true
 script = ExtResource("1_d7e6n")
@@ -49,3 +50,29 @@ target_position = Vector2(0, 48)
 
 [node name="UpRaycast" type="RayCast2D" parent="Center"]
 target_position = Vector2(0, -48)
+
+[node name="GroundRaycasts" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="GroundRaycasts"]
+position = Vector2(-30.999996, -31)
+rotation = 2.3561945
+exclude_parent = false
+target_position = Vector2(0, 15)
+
+[node name="RayCast2D2" type="RayCast2D" parent="GroundRaycasts"]
+position = Vector2(31, -31)
+rotation = -2.3561945
+exclude_parent = false
+target_position = Vector2(0, 15)
+
+[node name="RayCast2D3" type="RayCast2D" parent="GroundRaycasts"]
+position = Vector2(31, 31)
+rotation = -0.7853982
+exclude_parent = false
+target_position = Vector2(0, 15)
+
+[node name="RayCast2D4" type="RayCast2D" parent="GroundRaycasts"]
+position = Vector2(-31, 31)
+rotation = 0.7853982
+exclude_parent = false
+target_position = Vector2(0, 15)
