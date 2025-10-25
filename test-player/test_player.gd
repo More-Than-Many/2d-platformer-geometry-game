@@ -65,13 +65,7 @@ func jump() -> void:
 	if not can_jump:
 		return
 	
-	gravity_change(Vector2.DOWN)
-	
 	var gravity_angle := gravity_direction.angle() - deg_to_rad(90)
-	print(gravity_angle)
-	
-	var test = Vector2.DOWN.rotated(gravity_angle)
-	print(test)
 	
 	var highest_corner_position = Vector2(Center.global_position.x, Center.global_position.y - 32)
 	
@@ -82,14 +76,18 @@ func jump() -> void:
 			highest_corner_position = corner.global_position
 	
 	var direction_to_corner = (highest_corner_position - Center.global_position).normalized()
+	direction_to_corner = direction_to_corner.rotated(gravity_angle)
 	
 	linear_velocity.x = direction_to_corner.x * jump_length
 	linear_velocity.y = direction_to_corner.y * jump_height
+	
+	gravity_change(Vector2.DOWN)
 
 func stick() -> void:
 	for raycast in raycasts:
 		if raycast.is_colliding():
 			gravity_change(raycast.get_collision_point() - self.global_position)
+			print(gravity_direction)
 		
 		
 func gravity_change(stick_direction : Vector2) -> void:
